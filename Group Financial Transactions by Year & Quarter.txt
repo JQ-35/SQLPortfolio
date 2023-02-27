@@ -1,0 +1,10 @@
+/*
+In this Query, I am using the public dataset on Bigquery that shows the trade capture report for the "cymbal_investments" dataset.
+The goal with this query is to see how many transactions have occured, grouped by the quarter in the year. 
+*/
+
+SELECT  EXTRACT(YEAR FROM SendingTime) AS year,
+EXTRACT(QUARTER FROM SendingTime) AS quarter,
+COUNT(Quantity) AS Number_of_transactions
+ FROM `bigquery-public-data.cymbal_investments.trade_capture_report`
+ GROUP BY EXTRACT(YEAR FROM SendingTime), EXTRACT(QUARTER FROM SendingTime)
