@@ -1,0 +1,9 @@
+/*
+I use a MLB team schedule dataset to examine the total attendance each team generates for the year 
+*/
+
+SELECT DISTINCT(homeTeamName),
+SUM(attendance) OVER(PARTITION BY homeTeamName) AS Yearly_Attendance,
+FROM `bigquery-public-data.baseball.schedules` 
+Order BY Yearly_Attendance DESC
+
