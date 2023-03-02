@@ -1,0 +1,69 @@
+/*
+In this product sales dataset, I will analyze several metrics.
+*/
+
+
+--Grouping sales by productline
+
+SELECT PRODUCTLINE,
+SUM(sales) AS REVENUE,
+FROM `diesel-acolyte-374902.Sales_Data.Sales_Data`
+GROUP BY PRODUCTLINE
+ORDER BY 2 DESC
+
+
+--Checking which year made the most sales
+
+SELECT YEAR_ID,
+SUM(sales) AS REVENUE
+FROM `diesel-acolyte-374902.Sales_Data.Sales_Data`
+GROUP BY YEAR_ID
+ORDER BY 2 DESC
+
+
+--Which out of the 3 products produces the most revenue?
+SELECT DEALSIZE,
+SUM(sales) AS REVENUE
+FROM `diesel-acolyte-374902.Sales_Data.Sales_Data`
+GROUP BY DEALSIZE
+ORDER BY 2 DESC
+
+
+--What months was the best for sales?
+
+SELECT MONTH_ID,
+SUM(SALES) AS REVENUE,
+COUNT(ORDERNUMBER) AS FREQUENCY
+FROM `diesel-acolyte-374902.Sales_Data.Sales_Data`
+GROUP BY MONTH_ID
+ORDER BY 2 DESC
+
+--What product sells best in their best month of their best year?
+
+SELECT MONTH_ID, 
+PRODUCTLINE,
+SUM(SALES) AS REVENUE,
+COUNT(ORDERNUMBER)AS NUMBER_OF_ORDERS, 
+FROM `diesel-acolyte-374902.Sales_Data.Sales_Data`
+WHERE YEAR_ID = 2003 AND MONTH_ID = 11
+GROUP BY MONTH_ID, PRODUCTLINE
+ORDER BY 3 DESC
+
+
+--Who is the top customer?
+
+SELECT CUSTOMERNAME,
+SUM(SALES) AS MONETARY_VALUE,
+AVG(SALES) AS AVG_MONETARY_VALUE,
+COUNT(ORDERNUMBER) AS FREQUENCY,
+MAX(ORDERDATE) AS LAST_ORDER_DATE
+FROM `diesel-acolyte-374902.Sales_Data.Sales_Data`
+GROUP BY CUSTOMERNAME
+
+
+--What products are most often sold together?
+SELECT ORDERNUMBER,
+COUNT(*) AS RN
+FROM `diesel-acolyte-374902.Sales_Data.Sales_Data`
+WHERE STATUS = 'Shipped'
+GROUP BY ORDERNUMBER
